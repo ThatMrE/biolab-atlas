@@ -18,7 +18,7 @@ Interactive world map of community biotech, DIYbio, and open science labs.
 
 ## Submissions
 
-In its current form, submissions are stored **per-browser** in `localStorage`. That means each visitor only sees the labs they themselves added.
+In its current form, the site keeps submissions **per-browser** in `localStorage`. Each visitor therefore sees only the labs they added.
 
 To capture real community submissions you can curate:
 
@@ -29,7 +29,7 @@ In `biolab-atlas.html`, find the comment block at the bottom of the `<script>` t
 1. Add a hidden `<form name="lab-submission" netlify hidden>...</form>` somewhere in the HTML body
 2. Replace the storage call in the submit handler with a `fetch('/', {...})` POST to that form name
 
-Submissions show up in the Netlify dashboard under your site's "Forms" tab. Email yourself when one arrives, then manually append accepted ones to the `LABS` array.
+Submissions appear in the Netlify dashboard under your site's "Forms" tab. Email yourself when one arrives, then append the accepted ones by hand to the `LABS` array.
 
 ### Option B — Supabase / Firebase / your own API
 
