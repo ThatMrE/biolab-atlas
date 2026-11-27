@@ -1,0 +1,16 @@
+# Static site: no build step. Netlify publishes the repo root as-is.
+[build]
+  publish = "."
+
+# Old file name from the first manual upload.
+[[redirects]]
+  from = "/biolab-atlas.html"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
