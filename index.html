@@ -649,8 +649,9 @@
       <div class="field"><label for="sub-desc">Description</label><textarea id="sub-desc" name="desc" placeholder="A short blurb about what makes this lab interesting…" maxlength="1000"></textarea></div>
       <div class="field"><label for="sub-founded">Year Founded</label><input type="number" id="sub-founded" name="founded" placeholder="2025" min="1900" max="2030" inputmode="numeric"></div>
       <div class="field">
-        <label for="sub-region">Region</label>
-        <select id="sub-region" name="region">
+        <label for="sub-region">Region *</label>
+        <select id="sub-region" name="region" required>
+          <option value="" disabled selected>Choose a region</option>
           <option value="USA-EAST">US East</option>
           <option value="USA-WEST">US West</option>
           <option value="Americas">Americas (rest)</option>
@@ -1071,8 +1072,8 @@ subForm.addEventListener('submit', async (e) => {
   const btn = document.getElementById('submit-btn');
   const val = id => document.getElementById(id).value.trim();
   const name = val('sub-name'), city = val('sub-city'), country = val('sub-country');
-  if (!name || !city || !country) {
-    toast('Name, city, and country are required.', true);
+  if (!name || !city || !country || !val('sub-region')) {
+    toast('Name, city, country, and region are required.', true);
     return;
   }
   btn.disabled = true;
