@@ -10,30 +10,23 @@ Interactive world map of community biotech, DIYbio, and open science labs.
 
 **Current dataset:** 124 labs across 7 regions and ~45 countries.
 
-## Quick Netlify deploy
+## Netlify deploy
 
-1. Rename `biolab-atlas.html` → `index.html`
-2. Drop into Netlify (drag-and-drop on app.netlify.com works) — or push to a Git repo and connect
-3. Done. No build step. No env vars. No backend required for the static map.
+The site is `index.html` plus `netlify.toml`. There is no build step and no env vars.
+
+1. In Netlify, connect this repo (Project configuration → Build & deploy → Link repository). Leave the build command empty and keep the publish directory as `.`.
+2. Turn on **Forms → Enable form detection**, then redeploy. Without detection, the submit form accepts nothing.
+3. Every push to `main` then deploys. A drag-and-drop of the repo folder also works.
 
 ## Submissions
 
-In its current form, the site keeps submissions **per-browser** in `localStorage`. Each visitor therefore sees only the labs they added.
+The **Submit** tab is a Netlify form named `lab-submission`. Each submission goes to the Netlify dashboard under **Forms → lab-submission**. Fields: name, city, country, url, desc, founded, region, capabilities, email (optional), plus the lat/lng from the geocoder. A hidden honeypot field (`bot-field`) and Akismet filter spam.
 
-To capture real community submissions you can curate:
+The submitter also sees their lab on their own map at once (kept in `localStorage`). Other visitors see it only after you add it to `LABS`.
 
-### Option A — Netlify Forms (recommended, zero backend)
+To get an email for each submission, set it in Netlify: **Forms → Form notifications → Add notification → Email notification**.
 
-In `biolab-atlas.html`, find the comment block at the bottom of the `<script>` tag labeled "NETLIFY DEPLOYMENT NOTE." It shows the two changes:
-
-1. Add a hidden `<form name="lab-submission" netlify hidden>...</form>` somewhere in the HTML body
-2. Replace the storage call in the submit handler with a `fetch('/', {...})` POST to that form name
-
-Submissions appear in the Netlify dashboard under your site's "Forms" tab. Email yourself when one arrives, then append the accepted ones by hand to the `LABS` array.
-
-### Option B — Supabase / Firebase / your own API
-
-Replace `getSubmissions()` and `saveSubmissions()` with calls to whatever you prefer. Pattern is the same: read on boot, write on submit.
+To publish a submission, copy it into the `LABS` array in `index.html` and push.
 
 ## Editing the lab dataset
 
@@ -43,6 +36,8 @@ The lab list lives inside the HTML file as a JSON array assigned to `const LABS`
 2. Edit/add/remove entries
 3. Each entry needs: `name`, `city`, `country`, `region`, `lat`, `lng`, `sources` (array)
 4. Optional: `url`, `desc`, `founded`, `status` (e.g. `"dormant"`)
+
+Optional: `capabilities` (array): `tissue-culture`, `bsl2`
 
 Valid `sources` values: `HTGAA`, `DIYbio`, `Biopunk`, `Recent`, `Community`
 Valid `region` values: `USA-EAST`, `USA-WEST`, `Americas`, `Europe`, `Asia`, `Africa`, `Oceania`
